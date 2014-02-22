@@ -9,6 +9,8 @@ Boot up machines and provision server
 vagrant up
 ```
 
+Note: All commands are ran as root
+
 On both machines [drbd-0, drbd-1] as root, create volumes 
 
 ```
