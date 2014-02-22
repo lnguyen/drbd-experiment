@@ -11,3 +11,47 @@ pushd drbd-8.4.2
 make
 make install
 popd
+
+mkdir -p /etc/drbd.d
+
+cat <<EOF >/usr/local/etc/drbd.d/global_common.conf
+global {
+  usage-count yes;
+}
+common {
+  net {
+    protocol C;
+  }
+}
+EOF
+
+cat <<EOF >/usr/local/etc/drbd.d/r0.res
+resource r0 {
+  startup {
+    wfc-timeout  5;
+  }
+  on drbd-0 {
+    device    /dev/drbd1;
+    disk      /dev/sdb;
+    address   192.168.69.100:7789;
+    meta-disk internal;
+  }
+  on drbd-1 {
+    device    /dev/drbd1;
+    disk      /dev/sdb;
+    address   192.168.69.101:7789;
+    meta-disk internal;
+  }
+}
+EOF
+
+# Making mount for later use
+mkdir -p /mnt/drbd
+
+#Clear out the volume so drbd can create one
+shred /dev/sdb
+
+/usr/local/etc/init.d/drbd start
+
+#drbdadm create-md all
+#drbdadm up all
