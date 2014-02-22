@@ -1,0 +1,13 @@
+#!/bin/bash
+
+apt-get install -y flex
+
+wget http://oss.linbit.com/drbd/8.4/drbd-8.4.2.tar.gz
+
+tar xvf drbd-8.4.2.tar.gz
+
+pushd drbd-8.4.2
+./configure
+make
+make install
+popd
