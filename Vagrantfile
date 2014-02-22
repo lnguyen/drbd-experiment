@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.vm.network "private_network", ip: "192.168.69.#{ip}"
       v.vm.hostname = "drdb-#{index}"
       v.persistent_storage.enabled = true
-      v.persistent_storage.location = "~/tmp/source-#{index}.vdi"
+      v.persistent_storage.location = "./tmp/source-#{index}.vdi"
       v.persistent_storage.size = 5000
       v.persistent_storage.mountname = 'mysql'
       v.persistent_storage.filesystem = 'ext4'
